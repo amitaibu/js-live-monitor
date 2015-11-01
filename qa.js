@@ -1,3 +1,6 @@
+/**
+ * Our custom, unique to site tests.
+ */
 runTests = function() {
   return [
     {
@@ -17,6 +20,11 @@ runTests = function() {
   ]
 }
 
+/**
+ * Execute the tests, and if something fails, send it to the server.
+ *
+ * (currently it is just logged to the console)
+ */
 main = function() {
   result = runTests();
   result.forEach(function(row) {
