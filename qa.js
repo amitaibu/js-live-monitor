@@ -8,7 +8,7 @@ main = function() {
 }
 
 runTests = function() {
-  loadJS('./customTests.js', function() {
+  loadJS('https://cdn.rawgit.com/amitaibu/js-live-monitor/77c40f0079b809f297082c1be2741375fde105e8/customTests.js', function() {
     result = customTests();
     result.forEach(function(row) {
       if (!!row.result()) {
