@@ -1,37 +1,35 @@
 /**
- * Our custom, unique to site tests.
- */
-runTests = function() {
-  return [
-    {
-      id: "it should find the a visible add to cart link",
-      result: function() {
-        var element = document.querySelector('a.cart');
-        return !!element && element.offsetParent !== null;
-      }
-    },
-    {
-      id: "it should find a visible title",
-      result: function() {
-        var element = document.querySelector('h1');
-        return !!element && element.offsetParent !== null;
-      }
-    }
-  ]
-}
-
-/**
  * Execute the tests, and if something fails, send it to the server.
  *
  * (currently it is just logged to the console)
  */
 main = function() {
-  result = runTests();
-  result.forEach(function(row) {
-    if (!!row.result()) {
-      return;
-    }
+  runTests();
+}
 
-    console.error(row.id);
+runTests = function() {
+  loadJS('./customTests.js', function() {
+    result = customTests();
+    result.forEach(function(row) {
+      if (!!row.result()) {
+        return;
+      }
+
+      console.error(row.id);
+    });
   });
+}
+
+function loadJS(src, callback) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.async = true;
+    s.onreadystatechange = s.onload = function() {
+        var state = s.readyState;
+        if (!callback.done && (!state || /loaded|complete/.test(state))) {
+            callback.done = true;
+            callback();
+        }
+    };
+    document.getElementsByTagName('head')[0].appendChild(s);
 }
