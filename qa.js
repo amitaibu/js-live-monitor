@@ -20,8 +20,9 @@ runTests = function() {
 
     html2canvas(document.body, {
       onrendered: function(canvas) {
-        var dataURL = canvas.toDataURL("image/png");
-        document.body.appendText(dataURL);
+        var image = document.createElement('img');
+        image.src = canvas.toDataURL("image/png");
+        document.body.appendChild(image);
       }
     });
   });
