@@ -16,14 +16,14 @@ runTests = function() {
         return;
       }
 
-      errors.push(row);
+      errors.push(row.id);
     });
 
     var request = new XMLHttpRequest();
 
     var data = {
       build: 22,
-      url: '/',
+      // url: '/',
       errors: errors.join("\r\n")
     };
 
