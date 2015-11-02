@@ -8,15 +8,48 @@ main = function() {
 }
 
 runTests = function() {
-  loadJS('https://cdn.rawgit.com/amitaibu/js-live-monitor/77c40f0079b809f297082c1be2741375fde105e8/customTests.js', function() {
+  var errors = [];
+  loadJS('http://localhost/shoov/www/js_lm/22', function() {
     result = customTests();
     result.forEach(function(row) {
       if (!!row.result()) {
         return;
       }
 
-      console.error(row.id);
+      errors.push(row);
     });
+
+    var request = new XMLHttpRequest();
+
+    var data = {
+      build_id: 22,
+      url: '/'
+    };
+
+    var serializeObject = function(obj) {
+        var pairs = [];
+        for (var prop in obj) {
+            if (!obj.hasOwnProperty(prop)) {
+                continue;
+            }
+            pairs.push(prop + '=' + obj[prop]);
+        }
+        return pairs.join('&');
+    }
+
+    request.open('POST', 'http://localhost/shoov/www/api/v1.0/js-lm-incidents', true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+    request.onload = function() {
+        if (request.status === 200) {
+            console.log('ok');
+        }
+        else if (request.status !== 200) {
+            console.log('Request failed.  Returned status of ' + request.status);
+        }
+    };
+
+    request.send(encodeURI(serializeObject(data)));
 
     html2canvas(document.body, {
       onrendered: function(canvas) {
