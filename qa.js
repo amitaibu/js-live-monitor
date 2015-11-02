@@ -17,6 +17,13 @@ runTests = function() {
 
       console.error(row.id);
     });
+
+    html2canvas(document.body, {
+      onrendered: function(canvas) {
+        var dataURL = canvas.toDataURL("image/png");
+        document.body.appendText(dataURL);
+      }
+    });
   });
 }
 
