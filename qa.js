@@ -22,8 +22,9 @@ runTests = function() {
     var request = new XMLHttpRequest();
 
     var data = {
-      build_id: 22,
-      url: '/'
+      build: 22,
+      url: '/',
+      errors: errors.join("\r\n")
     };
 
     var serializeObject = function(obj) {
