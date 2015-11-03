@@ -38,25 +38,24 @@ runTests = function() {
         return pairs.join('&');
     }
 
-    request.open('POST', 'http://localhost/shoov/www/api/v1.0/js-lm-incidents', true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    request.onload = function() {
-        if (request.status === 200) {
-            console.log('ok');
-        }
-        else if (request.status !== 200) {
-            console.log('Request failed.  Returned status of ' + request.status);
-        }
-    };
-
-    request.send(encodeURI(serializeObject(data)));
 
     html2canvas(document.body, {
       onrendered: function(canvas) {
-        var image = document.createElement('img');
-        image.src = canvas.toDataURL("image/png");
-        document.body.appendChild(image);
+        data.image = canvas.toDataURL("image/png");
+
+        request.open('POST', 'http://localhost/shoov/www/api/v1.0/js_lm_incidents_upload', true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+        request.onload = function() {
+            if (request.status === 200) {
+                console.log('ok');
+            }
+            else if (request.status !== 200) {
+                console.log('Request failed.  Returned status of ' + request.status);
+            }
+        };
+
+        request.send(encodeURI(serializeObject(data)));
       }
     });
   });
