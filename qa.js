@@ -9,7 +9,8 @@ main = function() {
 
 runTests = function() {
   var errors = [];
-  loadJS('http://localhost/shoov/www/js_lm/22', function() {
+  var buildId = 22;
+  loadJS('http://localhost/shoov/www/js_lm/' + buildId, function() {
     result = customTests();
     result.forEach(function(row) {
       if (!!row.result()) {
@@ -22,7 +23,7 @@ runTests = function() {
     var request = new XMLHttpRequest();
 
     var data = {
-      build: 22,
+      build: buildId,
       // url: '/',
       errors: errors.join("\r\n")
     };
@@ -43,7 +44,14 @@ runTests = function() {
       onrendered: function(canvas) {
         data.image = canvas.toDataURL("image/png");
 
-        request.open('POST', 'http://localhost/shoov/www/api/v1.0/js_lm_incidents_upload', true);
+        var image = document.createElement('img');
+        image.src = canvas.toDataURL("image/png");
+        document.body.appendChild(image);
+
+        console.log(image.src);
+
+
+        request.open('POST', 'http://localhost/shoov/www/api/v1.0/js_lm_incidents', true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
         request.onload = function() {
