@@ -51,7 +51,7 @@ runTests = function() {
         console.log(image.src);
 
 
-        request.open('POST', 'http://localhost/shoov/www/api/v1.0/js_lm_incidents', true);
+        request.open('POST', 'http://localhost/shoov/www/api/v1.0/js-lm-incidents', true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
         request.onload = function() {
