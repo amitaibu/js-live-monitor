@@ -9,7 +9,7 @@ main = function() {
 
 runTests = function() {
   var errors = [];
-  var buildId = 22;
+  var buildId = 2;
   loadJS('http://localhost/shoov/www/js_lm/' + buildId, function() {
     result = customTests();
     result.forEach(function(row) {
